@@ -31,6 +31,7 @@ function main() {
         pages.index.classList.remove('hidden');
         pages.game.classList.add('hidden');
         pages.highscore.classList.add('hidden');
+        game();
     })
 
     const gameButtonElement = document.getElementById('play-btn');
@@ -41,4 +42,15 @@ function main() {
         pages.highscore.classList.add('hidden');
     })
     
+    function game(){
+        var div=document.getElementById('gameWindow');
+        for(var i = 0; i<20; i++){
+            for(var j = 0; j<20; j++){
+                var newDiv = document.createElement('div');
+                newDiv.id =`${i} ${j}`;
+                newDiv.classList.add('areaBox');
+                div.appendChild(newDiv);
+            }
+        }
+    }
 }

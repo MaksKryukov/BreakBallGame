@@ -216,14 +216,17 @@ html, body {
 .game-window{
   display: grid;
   box-shadow: 0 0 4px rgb(53, 255, 86);
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  border: 2px solid rgb(84, 255, 113);
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  border: 2px solid rgb(158, 255, 174);
   width: 98%;
   height: 100%;
-  place-self: center;
+  place-self: stretch;
 }
 
 .hidden {
   display: none;
+}
+.areaBox{
+  border: 1px dashed white;
 }
