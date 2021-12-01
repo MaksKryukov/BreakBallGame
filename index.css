@@ -1,6 +1,7 @@
 html, body {
   width: 100%;
   height: 100%;
+  margin: 0;
 }
 
 .index-page {
@@ -8,6 +9,24 @@ html, body {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   place-items: center;
+  width: 100%;
+  height: 100%;
+}
+.highscore-page{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+.game-page{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
+  width: 100%;
+  height: 100%;
 }
 .button2{
   text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
@@ -20,13 +39,12 @@ html, body {
   letter-spacing: 5px;
   width: fit-content;
   height: fit-content;
-  align-self: center;
   padding: .7em 2.2em;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 3;
-  margin-left: 10px;
+  place-self: center;
 }
 
 .button {
@@ -44,8 +62,7 @@ html, body {
   grid-column-end: 2;
   grid-row-start: 1;
   grid-row-end: 2;
-  align-self: center;
-  margin-left: 10px;
+  place-self: center;
   
 }
 
@@ -60,12 +77,28 @@ html, body {
   letter-spacing: 5px;
   width: fit-content;
   height: fit-content;
-  grid-column-start: 3;
-  grid-column-end: 4;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  place-self: center;
+}
+.button4{
+  text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
+  color: rgb(53, 255, 86);
+  background: black;
+  text-decoration: none;
+  user-select: none;
+  padding: .7em 0.5em;
+  border: 2px solid rgb(53, 255, 86);
+  letter-spacing: 5px;
+  width: fit-content;
+  height: fit-content;
+  grid-column-start: 1;
+  grid-column-end: 2;
   grid-row-start: 3;
   grid-row-end: 4;
-  align-self: center;
-  margin-left: 80px;
+  place-self: center;
 }
 
 .button:hover{
@@ -77,6 +110,10 @@ html, body {
 .button3:hover{
   background: rgb(48, 48, 48);
 }
+.button4:hover{
+  background: rgb(48, 48, 48);
+}
+
 .mainBOX {
   
   width: 80%;
@@ -86,15 +123,42 @@ html, body {
   left: -100px;
   box-shadow: 0 0 8px rgb(53, 255, 86);
 }
-.grid2{
+.score-box{
+  width: 80%;
+  height: 80%;
+  background-color: black;
+  top: 100px;
+  left: -100px;
+  box-shadow: 0 0 8px rgb(53, 255, 86);
+}
+.game-box{
+  width: 80%;
+  height: 80%;
+  background-color: black;
+  top: 100px;
+  left: -100px;
+  box-shadow: 0 0 8px rgb(53, 255, 86);
+}
+.menu-grid{
   display: grid;
   height: 100%;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   
 }
-.box0{
-  padding-left: 22px;
+.game-grid{
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 80% 1fr;
+}
+.highscore-text-grid{
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.break-game-text{
   text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
   font-size: 20px;
   color: rgb(53, 255, 86);
@@ -102,9 +166,42 @@ html, body {
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
-  align-self: center;
+  place-self: center;
 
 }
+.highscore-text{
+  text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
+  font-size: 20px;
+  color: rgb(53, 255, 86);
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  place-self: center;
+}
+.score-text{
+  text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
+  font-size: 16px;
+  color: rgb(53, 255, 86);
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  align-self: center;
+}
+.top-text{
+  margin-left: 30%;
+  text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
+  font-size: 16px;
+  color: rgb(53, 255, 86);
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  align-self: center;
+  
+}
+
 .box{
   grid-column-start: 2;
   grid-column-end: 3;
@@ -116,3 +213,17 @@ html, body {
   grid-template-rows: 1fr 1fr;
 }
 
+.game-window{
+  display: grid;
+  box-shadow: 0 0 4px rgb(53, 255, 86);
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  border: 2px solid rgb(84, 255, 113);
+  width: 98%;
+  height: 100%;
+  place-self: center;
+}
+
+.hidden {
+  display: none;
+}

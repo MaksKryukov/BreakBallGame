@@ -7,22 +7,44 @@
     <title>BreakBall</title>
     <link rel="stylesheet" href="index.css">
 </head>
-<body class="index-page">
-    <div class="mainBOX">
-       
-
-        <div class="grid2">
-            <div class="box0">B R E A K  G A M E</div>
-            <div class="box">
-                <button class="button">PLAY</button>
-                <button class="button2">HIGHSCORE</button> 
-            </div>
-            <button class="button3">EXIT</button> 
-         </div>
-            
-        
+<body class="">
+    <div id="index-page" class="index-page">
+        <div class="mainBOX">
+            <div class="menu-grid">
+                <div class="break-game-text">B R E A K  G A M E</div>
+                <div class="box">
+                    <button id="play-btn" class="button">PLAY</button>
+                    <button id="highscore-btn" class="button2">HIGHSCORE</button> 
+                </div>
+            </div>                 
+        </div>
     </div>
+    <div id="highscore-page" class="highscore-page hidden">
+            <div class="score-box">
+                <div class="highscore-text-grid">
+                    <div class="highscore-text">H I G H S C O R E</div>   
+                    <div class="score-bar1" style="color: white;">--------</div>
+                    <div class="score-bar2" style="color: white;">--------</div>
+                    <div class="score-bar3" style="color: white;">--------</div>
+                    <div class="score-bar4" style="color: white;">--------</div>
+                    <div class="score-bar5" style="color: white;">--------</div>
+                    <button id="menu-btn" class="button3">MENU</button>
+                </div>
+            </div>
+    </div>
+    <div id="game-page" class="game-page hidden">
+        <div class="game-box">
+            <div class="game-grid">
+                <div class="score-text">SCORE: </div> <div class="top-text">TOP: </div> 
+                <div class="game-window">
+                    ======
+                </div>
+                <button id="game-menu-btn" class="button4">MENU</button>
+            </div>
+        </div>
+</div>
     
-    
+
+    <script src="index.js"></script>
 </body>
 </html>
