@@ -243,8 +243,8 @@ html, body {
 .ball{
   background-color: rgb(225, 255, 230);
   border-radius: 50%;
-  height: 25px;
-  width: 25px;
+  height: 23px;
+  width: 23px;
   place-self: center;
   box-shadow: 0 0 3px rgb(53, 255, 86);
 }
@@ -252,4 +252,7 @@ html, body {
   background-color: rgb(126, 240, 122);
   border: 1px solid black;
   box-shadow: 0 0 3px rgb(53, 255, 86);
+}
+.wall{
+  border-color: rgb(41, 36, 36);
 }
