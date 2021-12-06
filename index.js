@@ -1,18 +1,44 @@
 var isNotCreated = true;
 var isGameActive = false;
-var dir = "";
 var isBallMoving = false;
-const timeToFrame = 200;
+let isGameOver = false;
+
 var ballDir = "";
-let ball = {
+var dir = "";
+
+const fieldWidth = 20;
+const fieldHeight = 20;
+
+const timeToFrame = 200;
+
+var score = 0;
+document.getElementById('score').innerHTML = score;
+var topScore = 0;
+document.getElementById('topScore').innerHTML = topScore;
+
+let block = {
   x: 0,
   y: 0
+}
+
+let ball = {
+  x: 9,
+  y: 18,
 }
 
 let platform = {
   x: 0,
   y: 0
 }
+
+const platformPoints = [
+  { x: 8, y: 19 },
+  { x: 9, y: 19 },
+  { x: 10, y: 19 },
+  { x: 11, y: 19 },
+  { x: 12, y: 19 },
+];
+
 document.addEventListener('readystatechange', () => {
   if (document.readyState === 'complete') main();
 });
@@ -21,7 +47,7 @@ document.onkeydown = checkKey;
 function checkKey(e) {
   e = e || window.event;
 
-  if (e.keyCode === 37) {
+  if (e.keyCode === 37 ) {
     dir = "left";
   }
 
@@ -30,8 +56,10 @@ function checkKey(e) {
   }
   else { dir = "notMoving" }
 
-  if(e.keyCode === 32 && !isBallMoving){
+  if (e.keyCode === 32) {
+    isBallMoving = true;
     ballDir = "topRight";
+    document.getElementById('startText').classList.add('hidden')
   }
 }
 /*
@@ -83,7 +111,6 @@ function main() {
     pages.highscore.classList.add('hidden');
     isGameActive = true;
     gameZone();
-    //addWall();
     setTimeout(game, timeToFrame);
   })
 
@@ -103,86 +130,100 @@ function main() {
       }
     }
   }
-
 }
-/*
-function addWall(){
-  for(var i = 0; i < 21; i++){
-    document.getElementById(0 + ' ' + `${i}`).classList.add('wall');
-    document.getElementById(`${i}` + ' ' + 0).classList.add('wall');
-    document.getElementById(`${i}` + ' ' + 20).classList.add('wall');
-  }
-}
-*/
 
-function addPlatform() {
-  for (var i = 0; i < 20; i++) {
-    document.getElementById(19 + ' ' + `${i}`).classList.remove('platform');
-  }
-  for (var i = platform.x + 8; i < platform.x + 13; i++) {
-    document.getElementById(19 + ' ' + `${i}`).classList.add('platform');
+function clearPlatform() {
+  for (const point of platformPoints) {
+    document.getElementById(`${point.y} ${point.x}`).classList.remove('platform');
   }
 
 }
 
-function addBall() {
-  for (var i = 0; i < 20; i++){
-    for(var j = 20; j > 0; j--){
-      document.getElementById(`${j}`+ ' ' + `${i}`).classList.remove('ball');
-    }
+function renderPlatform() {
+  for (const point of platformPoints) {
+    document.getElementById(`${point.y} ${point.x}`).classList.add('platform');
   }
-  for (var i = ball.x + 18; i < ball.x + 19; i++){
-    for(var j = ball.y + 10; j < ball.y + 11; j++){
-      document.getElementById(`${i}`+ ' ' + `${j}`).classList.add('ball');
-    }
-  }
-  
+}
+
+function clearBall() {
+  document.getElementById(`${ball.y}` + ' ' + `${ball.x}`).classList.remove('ball');
+}
+
+function renderBall() {
+  document.getElementById(`${ball.y}` + ' ' + `${ball.x}`).classList.add('ball');
 }
 
 function addBlock() {
-  for (var i = 2; i < 8; i++) {
-    for (var j = 2; j < 19; j++) {
+  for (var i = block.y + 2; i < block.y + 8; i++) {
+    for (var j = block.x + 2; j < block.x + 19; j++) {
       document.getElementById(`${i}` + ' ' + `${j}`).classList.add('block');
     }
   }
 }
-/*
-function ballCollision(){
-  if(ball.x < 7 && ball.y <10 && ballDir ==="topRight"){
-    ballDir="topLeft";
-  } else if(ball.x > -7 && ball.y <10 && ballDir ==="topLeft"){
-    ballDir="downLeft";
-  } 
-  else if(ball.x > -7 && ball.y >-10 && ballDir ==="downLeft"){
-    ballDir="downRight";
+
+function ballMove() {
+  if (ballDir === "downRight") {
+    ball.x++;
+    ball.y++;
+    if (ball.x === fieldWidth) ballDir = "downLeft";
+    else if (platformPoints.some((point) => point.x === ball.x && point.y === ball.y)) {
+      ballDir = "topRight";
+      ball.x--;
+      ball.y--;
+    } else if (ball.y === fieldHeight) //alert('GAME_OVER') ;
+      isBallMoving = false;
   }
-  else if(ball.x < 7 && ball.y >-10 && ballDir ==="downRight"){
-    ballDir="topRight"
+  else if (ballDir === "topRight") {
+    ball.x++;
+    ball.y--;
+    if (ball.x === fieldWidth) ballDir = "topLeft";
+    else if (ball.y === 0) ballDir = "downRight";
   }
- 
-}
-*/
-function ballMove(){
-  if (ballDir === "downRight" && ball.x < 7 ) {ball.x++; ball.y++;}
-  else if (ballDir === "topRight" && ball.x < 7 ) {ball.x--; ball.y++;}
-  else if (ballDir === "topLeft" && ball.x > -7 ) {ball.x--; ball.y--;}
-  else if (ballDir === "downLeft" && ball.x > -7) {ball.x++; ball.y--;}
-  
+  else if (ballDir === "topLeft") {
+    ball.x--;
+    ball.y--;
+    if (ball.x === 0) ballDir = "topRight";
+    else if (ball.y === 0) ballDir = "downLeft";
+  }
+  else if (ballDir === "downLeft") {
+    ball.x--;
+    ball.y++;
+    if (ball.x === 0) ballDir = "downRight";
+    else if (platformPoints.some((point) => point.x === ball.x && point.y === ball.y)) {
+      ballDir = "topLeft";
+      ball.x++;
+      ball.y--;
+    } else if (ball.y === fieldHeight) //alert('GAME_OVER');
+      isBallMoving = false;
+  }
+  console.log(ball);
 }
 
 function action() {
-  if (dir === "right" && platform.x < 7) platform.x++;
-  else if (dir === "left" && platform.x > -7) platform.x--;
+  if (dir === "right" && platformPoints[4].x < fieldWidth) {
+    for (const point of platformPoints) {
+      point.x += 1;
+    }
+    if (isBallMoving === false) ball.x += 1;
+  } else if (dir === "left" && platformPoints[0].x > 0) {
+    for (const point of platformPoints) {
+      point.x -= 1;
+    }
+    if (isBallMoving === false) ball.x -= 1;
+  }
+
   dir = "notMoving";
 }
 
 function game() {
-  //ballCollision()
-  addPlatform()
-  addBall();
+
+  clearPlatform();
+  clearBall();
   addBlock();
-  action();
-  ballMove();
+  if (isGameOver === false) action();
+  if (isBallMoving === true) ballMove();
+  renderPlatform();
+  renderBall();
   if (isGameActive) setTimeout(game, timeToFrame);
 }
 
