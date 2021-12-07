@@ -99,6 +99,23 @@ html, body {
   grid-row-end: 4;
   place-self: center;
 }
+.button5{
+  text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
+  color: rgb(53, 255, 86);
+  background: black;
+  text-decoration: none;
+  user-select: none;
+  padding: .7em 0.5em;
+  border: 2px solid rgb(53, 255, 86);
+  letter-spacing: 5px;
+  width: fit-content;
+  height: fit-content;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  place-self: center;
+}
 
 .button:hover{
   background: rgb(48, 48, 48);
@@ -110,6 +127,9 @@ html, body {
   background: rgb(48, 48, 48);
 }
 .button4:hover{
+  background: rgb(48, 48, 48);
+}
+.button5:hover{
   background: rgb(48, 48, 48);
 }
 
@@ -198,6 +218,22 @@ html, body {
   grid-row-start: 1;
   grid-row-end: 2;
   align-self: center;
+}
+.gameOver-Text{
+  text-shadow: 0 0 5px rgb(223, 12, 12), 0 0 10px rgb(223, 12, 12), 0 0 15px rgb(223, 12, 12); 
+  color: rgb(223, 12, 12);
+ margin-bottom: 100px;
+  -webkit-animation: gameOver-Text 3s linear infinite;
+  animation: gameOver-Text 3s linear infinite;
+} @-webkit-keyframes gameOver-Text {
+  0% { font-size: 20px; }
+  50% { font-size: 24px; }
+  100% { font-size: 20px; }
+} 
+@keyframes gameOver-Text {
+  0% { font-size: 20px; }
+  50% { font-size: 24px; }
+  100% { font-size: 20px; }
 }
 .start-Text{
   text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
