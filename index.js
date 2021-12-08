@@ -14,86 +14,93 @@ const timeToFrame = 200;
 
 var score = 0;
 
-var topScore = 0;
-document.getElementById('topScore').innerHTML = topScore;
+let num = 0;
 
-let blockPoints =[
-  {x: 3, y: 2},
-  {x: 4, y: 2},
-  {x: 5, y: 2},
-  {x: 6, y: 2},
-  {x: 7, y: 2},
-  {x: 8, y: 2},
-  {x: 9, y: 2},
-  {x: 10, y: 2},
-  {x: 11, y: 2},
-  {x: 12, y: 2},
-  {x: 13, y: 2},
-  {x: 14, y: 2},
-  {x: 15, y: 2},
-  {x: 16, y: 2},
-  {x: 17, y: 2},
-  {x: 3, y: 3},
-  {x: 4, y: 3},
-  {x: 5, y: 3},
-  {x: 6, y: 3},
-  {x: 7, y: 3},
-  {x: 8, y: 3},
-  {x: 9, y: 3},
-  {x: 10, y: 3},
-  {x: 11, y: 3},
-  {x: 12, y: 3},
-  {x: 13, y: 3},
-  {x: 14, y: 3},
-  {x: 15, y: 3},
-  {x: 16, y: 3},
-  {x: 17, y: 3},
-  {x: 3, y: 4},
-  {x: 4, y: 4},
-  {x: 5, y: 4},
-  {x: 6, y: 4},
-  {x: 7, y: 4},
-  {x: 8, y: 4},
-  {x: 9, y: 4},
-  {x: 10, y: 4},
-  {x: 11, y: 4},
-  {x: 12, y: 4},
-  {x: 13, y: 4},
-  {x: 14, y: 4},
-  {x: 15, y: 4},
-  {x: 16, y: 4},
-  {x: 17, y: 4},
-  {x: 3, y: 5},
-  {x: 4, y: 5},
-  {x: 5, y: 5},
-  {x: 6, y: 5},
-  {x: 7, y: 5},
-  {x: 8, y: 5},
-  {x: 9, y: 5},
-  {x: 10, y: 5},
-  {x: 11, y: 5},
-  {x: 12, y: 5},
-  {x: 13, y: 5},
-  {x: 14, y: 5},
-  {x: 15, y: 5},
-  {x: 16, y: 5},
-  {x: 17, y: 5},
-  {x: 3, y: 6},
-  {x: 4, y: 6},
-  {x: 5, y: 6},
-  {x: 6, y: 6},
-  {x: 7, y: 6},
-  {x: 8, y: 6},
-  {x: 9, y: 6},
-  {x: 10, y: 6},
-  {x: 11, y: 6},
-  {x: 12, y: 6},
-  {x: 13, y: 6},
-  {x: 14, y: 6},
-  {x: 15, y: 6},
-  {x: 16, y: 6},
-  {x: 17, y: 6},
-]
+var topScore = 0;
+let newName = "";
+let nickNames = ["", "", "", "", ""];
+let allScore = [0, 0, 0, 0, 0];
+let min = allScore[0];
+
+const defaultLevel1BlockPoints = [
+  { x: 3, y: 2 },
+  { x: 4, y: 2 },
+  { x: 5, y: 2 },
+  { x: 6, y: 2 },
+  { x: 7, y: 2 },
+  { x: 8, y: 2 },
+  { x: 9, y: 2 },
+  { x: 10, y: 2 },
+  { x: 11, y: 2 },
+  { x: 12, y: 2 },
+  { x: 13, y: 2 },
+  { x: 14, y: 2 },
+  { x: 15, y: 2 },
+  { x: 16, y: 2 },
+  { x: 17, y: 2 },
+  { x: 3, y: 3 },
+  { x: 4, y: 3 },
+  { x: 5, y: 3 },
+  { x: 6, y: 3 },
+  { x: 7, y: 3 },
+  { x: 8, y: 3 },
+  { x: 9, y: 3 },
+  { x: 10, y: 3 },
+  { x: 11, y: 3 },
+  { x: 12, y: 3 },
+  { x: 13, y: 3 },
+  { x: 14, y: 3 },
+  { x: 15, y: 3 },
+  { x: 16, y: 3 },
+  { x: 17, y: 3 },
+  { x: 3, y: 4 },
+  { x: 4, y: 4 },
+  { x: 5, y: 4 },
+  { x: 6, y: 4 },
+  { x: 7, y: 4 },
+  { x: 8, y: 4 },
+  { x: 9, y: 4 },
+  { x: 10, y: 4 },
+  { x: 11, y: 4 },
+  { x: 12, y: 4 },
+  { x: 13, y: 4 },
+  { x: 14, y: 4 },
+  { x: 15, y: 4 },
+  { x: 16, y: 4 },
+  { x: 17, y: 4 },
+  { x: 3, y: 5 },
+  { x: 4, y: 5 },
+  { x: 5, y: 5 },
+  { x: 6, y: 5 },
+  { x: 7, y: 5 },
+  { x: 8, y: 5 },
+  { x: 9, y: 5 },
+  { x: 10, y: 5 },
+  { x: 11, y: 5 },
+  { x: 12, y: 5 },
+  { x: 13, y: 5 },
+  { x: 14, y: 5 },
+  { x: 15, y: 5 },
+  { x: 16, y: 5 },
+  { x: 17, y: 5 },
+  { x: 3, y: 6 },
+  { x: 4, y: 6 },
+  { x: 5, y: 6 },
+  { x: 6, y: 6 },
+  { x: 7, y: 6 },
+  { x: 8, y: 6 },
+  { x: 9, y: 6 },
+  { x: 10, y: 6 },
+  { x: 11, y: 6 },
+  { x: 12, y: 6 },
+  { x: 13, y: 6 },
+  { x: 14, y: 6 },
+  { x: 15, y: 6 },
+  { x: 16, y: 6 },
+  { x: 17, y: 6 },
+];
+
+let blockPoints = defaultLevel1BlockPoints.slice();
 
 let ball = {
   x: 10,
@@ -116,20 +123,22 @@ document.onkeydown = checkKey;
 function checkKey(e) {
   e = e || window.event;
 
-  if (e.keyCode === 37 ) {
+  if (e.keyCode === 37) {
     dir = "left";
   }
 
   else if (e.keyCode === 39) {
     dir = "right";
   }
-  else {dir = "notMoving"}
-
-  if (e.keyCode === 32) {
-    isBallMoving = true;
-    ballDir = "topRight";
-    document.getElementById('startText').classList.add('hidden')
+  else { dir = "notMoving" }
+  if (isBallMoving === false) {
+    if (e.keyCode === 32) {
+      isBallMoving = true;
+      ballDir = "topRight";
+      document.getElementById('startText').classList.add('hidden')
+    }
   }
+
 }
 
 function main() {
@@ -149,11 +158,12 @@ function main() {
 
   const highscoreGameButtonElement = document.getElementById('game-score-btn');
 
-  highscoreGameButtonElement.addEventListener('click', () =>{
-    restart()
+  highscoreGameButtonElement.addEventListener('click', () => {
     pages.index.classList.add('hidden');
     pages.game.classList.add('hidden');
     pages.highscore.classList.remove('hidden');
+    restart();
+    namingThePLayer();
   })
 
   const menuButtonElement = document.getElementById('menu-btn');
@@ -182,6 +192,7 @@ function main() {
     pages.highscore.classList.add('hidden');
     isGameActive = true;
     gameZone();
+    blockPoints = []; //defaultLevel1BlockPoints.slice();
     setTimeout(game, timeToFrame);
   })
 
@@ -203,7 +214,7 @@ function main() {
   }
 }
 
-function restart(){
+function restart() {
   clearBall();
   clearPlatform();
   removeBlocks();
@@ -224,82 +235,82 @@ function restart(){
     { x: 11, y: 19 },
     { x: 12, y: 19 },
   ];
-  blockPoints =[
-    {x: 3, y: 2},
-    {x: 4, y: 2},
-    {x: 5, y: 2},
-    {x: 6, y: 2},
-    {x: 7, y: 2},
-    {x: 8, y: 2},
-    {x: 9, y: 2},
-    {x: 10, y: 2},
-    {x: 11, y: 2},
-    {x: 12, y: 2},
-    {x: 13, y: 2},
-    {x: 14, y: 2},
-    {x: 15, y: 2},
-    {x: 16, y: 2},
-    {x: 17, y: 2},
-    {x: 3, y: 3},
-    {x: 4, y: 3},
-    {x: 5, y: 3},
-    {x: 6, y: 3},
-    {x: 7, y: 3},
-    {x: 8, y: 3},
-    {x: 9, y: 3},
-    {x: 10, y: 3},
-    {x: 11, y: 3},
-    {x: 12, y: 3},
-    {x: 13, y: 3},
-    {x: 14, y: 3},
-    {x: 15, y: 3},
-    {x: 16, y: 3},
-    {x: 17, y: 3},
-    {x: 3, y: 4},
-    {x: 4, y: 4},
-    {x: 5, y: 4},
-    {x: 6, y: 4},
-    {x: 7, y: 4},
-    {x: 8, y: 4},
-    {x: 9, y: 4},
-    {x: 10, y: 4},
-    {x: 11, y: 4},
-    {x: 12, y: 4},
-    {x: 13, y: 4},
-    {x: 14, y: 4},
-    {x: 15, y: 4},
-    {x: 16, y: 4},
-    {x: 17, y: 4},
-    {x: 3, y: 5},
-    {x: 4, y: 5},
-    {x: 5, y: 5},
-    {x: 6, y: 5},
-    {x: 7, y: 5},
-    {x: 8, y: 5},
-    {x: 9, y: 5},
-    {x: 10, y: 5},
-    {x: 11, y: 5},
-    {x: 12, y: 5},
-    {x: 13, y: 5},
-    {x: 14, y: 5},
-    {x: 15, y: 5},
-    {x: 16, y: 5},
-    {x: 17, y: 5},
-    {x: 3, y: 6},
-    {x: 4, y: 6},
-    {x: 5, y: 6},
-    {x: 6, y: 6},
-    {x: 7, y: 6},
-    {x: 8, y: 6},
-    {x: 9, y: 6},
-    {x: 10, y: 6},
-    {x: 11, y: 6},
-    {x: 12, y: 6},
-    {x: 13, y: 6},
-    {x: 14, y: 6},
-    {x: 15, y: 6},
-    {x: 16, y: 6},
-    {x: 17, y: 6},
+  blockPoints = [
+    { x: 3, y: 2 },
+    { x: 4, y: 2 },
+    { x: 5, y: 2 },
+    { x: 6, y: 2 },
+    { x: 7, y: 2 },
+    { x: 8, y: 2 },
+    { x: 9, y: 2 },
+    { x: 10, y: 2 },
+    { x: 11, y: 2 },
+    { x: 12, y: 2 },
+    { x: 13, y: 2 },
+    { x: 14, y: 2 },
+    { x: 15, y: 2 },
+    { x: 16, y: 2 },
+    { x: 17, y: 2 },
+    { x: 3, y: 3 },
+    { x: 4, y: 3 },
+    { x: 5, y: 3 },
+    { x: 6, y: 3 },
+    { x: 7, y: 3 },
+    { x: 8, y: 3 },
+    { x: 9, y: 3 },
+    { x: 10, y: 3 },
+    { x: 11, y: 3 },
+    { x: 12, y: 3 },
+    { x: 13, y: 3 },
+    { x: 14, y: 3 },
+    { x: 15, y: 3 },
+    { x: 16, y: 3 },
+    { x: 17, y: 3 },
+    { x: 3, y: 4 },
+    { x: 4, y: 4 },
+    { x: 5, y: 4 },
+    { x: 6, y: 4 },
+    { x: 7, y: 4 },
+    { x: 8, y: 4 },
+    { x: 9, y: 4 },
+    { x: 10, y: 4 },
+    { x: 11, y: 4 },
+    { x: 12, y: 4 },
+    { x: 13, y: 4 },
+    { x: 14, y: 4 },
+    { x: 15, y: 4 },
+    { x: 16, y: 4 },
+    { x: 17, y: 4 },
+    { x: 3, y: 5 },
+    { x: 4, y: 5 },
+    { x: 5, y: 5 },
+    { x: 6, y: 5 },
+    { x: 7, y: 5 },
+    { x: 8, y: 5 },
+    { x: 9, y: 5 },
+    { x: 10, y: 5 },
+    { x: 11, y: 5 },
+    { x: 12, y: 5 },
+    { x: 13, y: 5 },
+    { x: 14, y: 5 },
+    { x: 15, y: 5 },
+    { x: 16, y: 5 },
+    { x: 17, y: 5 },
+    { x: 3, y: 6 },
+    { x: 4, y: 6 },
+    { x: 5, y: 6 },
+    { x: 6, y: 6 },
+    { x: 7, y: 6 },
+    { x: 8, y: 6 },
+    { x: 9, y: 6 },
+    { x: 10, y: 6 },
+    { x: 11, y: 6 },
+    { x: 12, y: 6 },
+    { x: 13, y: 6 },
+    { x: 14, y: 6 },
+    { x: 15, y: 6 },
+    { x: 16, y: 6 },
+    { x: 17, y: 6 },
   ]
 }
 
@@ -323,11 +334,11 @@ function renderBall() {
   document.getElementById(`${ball.y}` + ' ' + `${ball.x}`).classList.add('ball');
 }
 
-function removeBlock(point){
+function removeBlock(point) {
   document.getElementById(`${point.y} ${point.x}`).classList.remove('block');
 }
 
-function removeBlocks(){
+function removeBlocks() {
   for (const point of blockPoints) {
     document.getElementById(`${point.y} ${point.x}`).classList.remove('block');
   }
@@ -339,20 +350,52 @@ function addBlock() {
   }
 }
 
+function namingThePLayer() {
+  newName = prompt("Enter your name", "");
+  nickNames[num] = newName;
+  console.log(nickNames[num]);
+}
+
 function gameOver() {
-  //alert('GAME_OVER') ;
   isBallMoving = false;
   isGameOver = true;
+  isGameActive = false;
   document.getElementById('gameOverText').classList.remove('hidden');
   document.getElementById('game-score-btn').classList.remove('hidden');
   document.getElementById('game-menu-btn').classList.add('hidden');
+
+  for (var i = 0; i < allScore.length; i++) {
+    if (allScore[i] <= min) {
+      allScore[i] = score;
+      num = i;
+      break;
+    }
+  }
+
+  console.log(allScore[0]);
+  console.log(allScore[1]);
+  console.log(allScore[2]);
+  console.log(allScore[3]);
+  console.log(allScore[4]);
+}
+
+function bestScore() {
+  for (var i = 0; i < allScore.length; i++) {
+    if (allScore[i] > topScore) {
+      topScore = allScore[i];
+    } else if (score > topScore) {
+      topScore = score;
+    }
+  }
 }
 
 function ballMove() {
+  console.log('BALL COORDS',  ball);
   if (ballDir === "downRight") {
     ball.x++;
     ball.y++;
-    if (ball.x === fieldWidth) ballDir = "downLeft";
+    if (ball.x === fieldWidth && ball.y === fieldWidth) gameOver();
+    else if (ball.x === fieldWidth) ballDir = "downLeft";
     else if (platformPoints.some((point) => point.x === ball.x && point.y === ball.y)) {
       ballDir = "topRight";
       ball.x--;
@@ -362,33 +405,45 @@ function ballMove() {
   else if (ballDir === "topRight") {
     ball.x++;
     ball.y--;
-    if (ball.x === fieldWidth) ballDir = "topLeft";
+    if (ball.x === fieldWidth && ball.y === 0) ballDir = "downLeft";
+    else if (ball.x === fieldWidth) ballDir = "topLeft";
     else if (ball.y === 0) ballDir = "downRight";
   }
   else if (ballDir === "topLeft") {
     ball.x--;
     ball.y--;
-    if (ball.x === 0) ballDir = "topRight";
+    if (ball.x === 0 && ball.y === 0) ballDir = "downRight";
+    else if (ball.x === 0) ballDir = "topRight";
     else if (ball.y === 0) ballDir = "downLeft";
   }
   else if (ballDir === "downLeft") {
     ball.x--;
     ball.y++;
-    if (ball.x === 0) ballDir = "downRight";
+    if (ball.x === 0 && ball.y === fieldWidth) gameOver();
+    else if (ball.x === 0) ballDir = "downRight";
     else if (platformPoints.some((point) => point.x === ball.x && point.y === ball.y)) {
       ballDir = "topLeft";
       ball.x++;
       ball.y--;
     } else if (ball.y === fieldHeight) gameOver();
   }
+  console.log('BALL COORDS AFTER CHANGE',  ball);
+  if (ball.x < 0 || ball.y < 0) debugger;
 }
 
 function ballHitToBrick() {
   const brick = blockPoints.find((point) => point.x === ball.x && point.y === ball.y);
   console.log('@@@', brick);
   if (brick != null) {
+    console.log('!!!!!!!1', blockPoints.length);
     const index = blockPoints.indexOf(brick);
     blockPoints.splice(index, 1);
+    console.log('!!!!!!!2', blockPoints.length, index);
+    const leftBrick = blockPoints.find((point) => point.x === brick.x - 1 && point.y === brick.y);
+    const rightBrick = blockPoints.find((point) => point.x === brick.x + 1 && point.y === brick.y);
+    const topBrick = blockPoints.find((point) => point.x === brick.x && point.y === brick.y - 1);
+    const bottomBrick = blockPoints.find((point) => point.x === brick.x && point.y === brick.y + 1);
+    console.log('around bricks', leftBrick, rightBrick, topBrick, bottomBrick);
     if (ballDir === "downRight") {
       ball.y--;
       ballDir === "topRight";
@@ -401,7 +456,10 @@ function ballHitToBrick() {
     } else if (ballDir === "downLeft") {
       ball.y--;
       ballDir = "topLeft";
-    } 
+    } else if (ballDir === "downRight" && rightBrick.x===ball.x) {
+      ball.x--;
+      ballDir === "downLeft";
+    }
     removeBlock(brick);
     score++;
   }
@@ -423,9 +481,7 @@ function platformMove() {
   dir = "notMoving";
 }
 
-
 function game() {
-
   clearPlatform();
   clearBall();
   addBlock();
@@ -434,9 +490,16 @@ function game() {
     ballMove();
     ballHitToBrick();
   }
+  document.getElementById('topScore').innerHTML = topScore;
   document.getElementById('score').innerHTML = score;
+  bestScore();
   renderPlatform();
   renderBall()
+  document.getElementById('scoreBar1').innerHTML = allScore[0];
+  document.getElementById('scoreBar2').innerHTML = allScore[1];
+  document.getElementById('scoreBar3').innerHTML = allScore[2];
+  document.getElementById('scoreBar4').innerHTML = allScore[3];
+  document.getElementById('scoreBar5').innerHTML = allScore[4];
   if (isGameActive) setTimeout(game, timeToFrame);
 }
 
