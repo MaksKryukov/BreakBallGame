@@ -192,7 +192,7 @@ function main() {
     pages.highscore.classList.add('hidden');
     isGameActive = true;
     gameZone();
-    blockPoints = []; //defaultLevel1BlockPoints.slice();
+    blockPoints = defaultLevel1BlockPoints.slice();
     setTimeout(game, timeToFrame);
   })
 
