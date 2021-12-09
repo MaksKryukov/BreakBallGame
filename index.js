@@ -15,12 +15,9 @@ const timeToFrame = 200;
 var score = 0;
 
 let num = 0;
-
+let players = [];
 var topScore = 0;
 let newName = "";
-let nickNames = ["", "", "", "", ""];
-let allScore = [0, 0, 0, 0, 0];
-let min = allScore[0];
 
 const defaultLevel1BlockPoints = [
   { x: 3, y: 2 },
@@ -163,7 +160,6 @@ function main() {
     pages.game.classList.add('hidden');
     pages.highscore.classList.remove('hidden');
     restart();
-    namingThePLayer();
   })
 
   const menuButtonElement = document.getElementById('menu-btn');
@@ -350,37 +346,21 @@ function addBlock() {
   }
 }
 
-function namingThePLayer() {
-  newName = prompt("Enter your name", "");
-  nickNames[num] = newName;
-  console.log(nickNames[num]);
-}
-
 function gameOver() {
+  
   isBallMoving = false;
   isGameOver = true;
   isGameActive = false;
   document.getElementById('gameOverText').classList.remove('hidden');
   document.getElementById('game-score-btn').classList.remove('hidden');
   document.getElementById('game-menu-btn').classList.add('hidden');
-
-  for (var i = 0; i < allScore.length; i++) {
-    if (allScore[i] <= min) {
-      allScore[i] = score;
-      num = i;
-      break;
-    }
-  }
-
-  console.log(allScore[0]);
-  console.log(allScore[1]);
-  console.log(allScore[2]);
-  console.log(allScore[3]);
-  console.log(allScore[4]);
+  newName = prompt("Enter your name", "");
+  updateHighscore(newName, score);
+  
 }
 
 function bestScore() {
-  for (var i = 0; i < allScore.length; i++) {
+  for (var i = 0; i < localStorage.length; i++) {
     if (allScore[i] > topScore) {
       topScore = allScore[i];
     } else if (score > topScore) {
@@ -390,7 +370,6 @@ function bestScore() {
 }
 
 function ballMove() {
-  console.log('BALL COORDS',  ball);
   if (ballDir === "downRight") {
     ball.x++;
     ball.y++;
@@ -427,38 +406,49 @@ function ballMove() {
       ball.y--;
     } else if (ball.y === fieldHeight) gameOver();
   }
-  console.log('BALL COORDS AFTER CHANGE',  ball);
-  if (ball.x < 0 || ball.y < 0) debugger;
 }
 
 function ballHitToBrick() {
   const brick = blockPoints.find((point) => point.x === ball.x && point.y === ball.y);
-  console.log('@@@', brick);
   if (brick != null) {
-    console.log('!!!!!!!1', blockPoints.length);
     const index = blockPoints.indexOf(brick);
     blockPoints.splice(index, 1);
-    console.log('!!!!!!!2', blockPoints.length, index);
     const leftBrick = blockPoints.find((point) => point.x === brick.x - 1 && point.y === brick.y);
     const rightBrick = blockPoints.find((point) => point.x === brick.x + 1 && point.y === brick.y);
     const topBrick = blockPoints.find((point) => point.x === brick.x && point.y === brick.y - 1);
     const bottomBrick = blockPoints.find((point) => point.x === brick.x && point.y === brick.y + 1);
-    console.log('around bricks', leftBrick, rightBrick, topBrick, bottomBrick);
-    if (ballDir === "downRight") {
-      ball.y--;
-      ballDir === "topRight";
-    } else if (ballDir === "topRight") {
-      ball.x--;
-      ballDir = "topLeft";
+    if (ballDir === "topRight") {
+      if (rightBrick != null) {
+        ball.y++;
+        ballDir = "downRight";
+      } else if (topBrick != null) {
+        ball.y++;
+        ballDir = "downRight";
+      }
     } else if (ballDir === "topLeft") {
-      ball.x++;
-      ballDir = "topRight";
+      if (leftBrick != null) {
+        ball.x++;
+        ballDir = "topRight";
+      } else if (topBrick != null) {
+        ball.y++;
+        ballDir = "downLeft";
+      }
+    } else if (ballDir === "downRight") {
+      if (bottomBrick != null) {
+        ball.x--;
+        ballDir = "downLeft";
+      } else if (rightBrick != null) {
+        ball.x--;
+        ballDir === "topRight";
+      }
     } else if (ballDir === "downLeft") {
-      ball.y--;
-      ballDir = "topLeft";
-    } else if (ballDir === "downRight" && rightBrick.x===ball.x) {
-      ball.x--;
-      ballDir === "downLeft";
+      if (bottomBrick != null) {
+        ball.y--;
+        ballDir = "topLeft";
+      } else if (leftBrick != null) {
+        ball.x++;
+        ballDir = "downRight";
+      }
     }
     removeBlock(brick);
     score++;
@@ -495,11 +485,24 @@ function game() {
   bestScore();
   renderPlatform();
   renderBall()
-  document.getElementById('scoreBar1').innerHTML = allScore[0];
-  document.getElementById('scoreBar2').innerHTML = allScore[1];
-  document.getElementById('scoreBar3').innerHTML = allScore[2];
-  document.getElementById('scoreBar4').innerHTML = allScore[3];
-  document.getElementById('scoreBar5').innerHTML = allScore[4];
+
   if (isGameActive) setTimeout(game, timeToFrame);
 }
 
+function updateHighscore(playerName, newScore) {
+  let highscore = JSON.parse(localStorage.getItem('highscore')) ?? []; // read
+
+  highscore.push({ name: playerName, score: newScore });
+
+  highscore.sort((a, b) => b.score - a.score);
+
+  highscore = highscore.slice(0, 5);
+
+  localStorage.setItem('highscore', JSON.stringify(highscore)); // write
+}
+
+function getHighscore() {
+  const highscore = JSON.parse(localStorage.getItem('highscore')) ?? []; // read
+
+  return highscore;
+}

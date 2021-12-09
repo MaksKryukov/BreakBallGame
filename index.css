@@ -150,6 +150,20 @@ html, body {
   left: -100px;
   box-shadow: 0 0 8px rgb(53, 255, 86);
 }
+
+.separator{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.scoreBarName{
+  color: rgb(53, 255, 86);
+  font-size: 20px;
+  letter-spacing: 5px;
+  place-self: center;
+  text-shadow: 0 0 5px rgb(53, 255, 86), 0 0 10px rgb(53, 255, 86), 0 0 15px rgb(53, 255, 86); 
+}
 .score-bar{
   color: rgb(225, 255, 230);
   font-size: 16px;
