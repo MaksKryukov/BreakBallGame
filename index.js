@@ -15,8 +15,25 @@ const timeToFrame = 200;
 var score = 0;
 
 let num = 0;
-let players = [];
+players = getHighscore();
+document.getElementById('scoreBar1').innerHTML = players[0].score;
+document.getElementById('scoreBar2').innerHTML = players[1].score;
+document.getElementById('scoreBar3').innerHTML = players[2].score;
+document.getElementById('scoreBar4').innerHTML = players[3].score;
+document.getElementById('scoreBar5').innerHTML = players[4].score;
+document.getElementById('scoreBar1-Name').innerHTML = players[0].name;
+document.getElementById('scoreBar2-Name').innerHTML = players[1].name;
+document.getElementById('scoreBar3-Name').innerHTML = players[2].name;
+document.getElementById('scoreBar4-Name').innerHTML = players[3].name;
+document.getElementById('scoreBar5-Name').innerHTML = players[4].name;
+
+console.log(players);
 var topScore = 0;
+
+let min = [0];
+
+let scoreNumbers = [0, 0, 0, 0, 0];
+
 let newName = "";
 
 const defaultLevel1BlockPoints = [
@@ -347,7 +364,7 @@ function addBlock() {
 }
 
 function gameOver() {
-  
+
   isBallMoving = false;
   isGameOver = true;
   isGameActive = false;
@@ -356,14 +373,33 @@ function gameOver() {
   document.getElementById('game-menu-btn').classList.add('hidden');
   newName = prompt("Enter your name", "");
   updateHighscore(newName, score);
-  
+  players = getHighscore();
+  document.getElementById('scoreBar1').innerHTML = players[0].score;
+  document.getElementById('scoreBar2').innerHTML = players[1].score;
+  document.getElementById('scoreBar3').innerHTML = players[2].score;
+  document.getElementById('scoreBar4').innerHTML = players[3].score;
+  document.getElementById('scoreBar5').innerHTML = players[4].score;
+  document.getElementById('scoreBar1-Name').innerHTML = players[0].name;
+  document.getElementById('scoreBar2-Name').innerHTML = players[1].name;
+  document.getElementById('scoreBar3-Name').innerHTML = players[2].name;
+  document.getElementById('scoreBar4-Name').innerHTML = players[3].name;
+  document.getElementById('scoreBar5-Name').innerHTML = players[4].name;
+
+
 }
 
 function bestScore() {
-  for (var i = 0; i < localStorage.length; i++) {
-    if (allScore[i] > topScore) {
-      topScore = allScore[i];
-    } else if (score > topScore) {
+  scoreNumbers[0] = parseInt(players[0].score);
+  scoreNumbers[1] = parseInt(players[1].score);
+  scoreNumbers[2] = parseInt(players[2].score);
+  scoreNumbers[3] = parseInt(players[3].score);
+  scoreNumbers[4] = parseInt(players[4].score);
+  min = scoreNumbers[0];
+  console.log(scoreNumbers);
+  console.log(num);
+  for (var i = 0; i < 6; i++) {
+     topScore = Math.max.apply(null, scoreNumbers);
+    if (Math.max.apply(null, scoreNumbers) < score) {
       topScore = score;
     }
   }
@@ -418,6 +454,7 @@ function ballHitToBrick() {
     const topBrick = blockPoints.find((point) => point.x === brick.x && point.y === brick.y - 1);
     const bottomBrick = blockPoints.find((point) => point.x === brick.x && point.y === brick.y + 1);
     if (ballDir === "topRight") {
+      debugger;
       if (rightBrick != null) {
         ball.y++;
         ballDir = "downRight";
@@ -427,7 +464,7 @@ function ballHitToBrick() {
       }
     } else if (ballDir === "topLeft") {
       if (leftBrick != null) {
-        ball.x++;
+        ball.y++;
         ballDir = "topRight";
       } else if (topBrick != null) {
         ball.y++;
