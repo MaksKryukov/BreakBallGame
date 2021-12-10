@@ -9,32 +9,17 @@ var dir = "";
 const fieldWidth = 20;
 const fieldHeight = 20;
 
-const timeToFrame = 200;
+let timeToFrame = 200;
 
+let score = 0;
 
-var score = 0;
-
-let num = 0;
-players = getHighscore();
-document.getElementById('scoreBar1').innerHTML = players[0].score;
-document.getElementById('scoreBar2').innerHTML = players[1].score;
-document.getElementById('scoreBar3').innerHTML = players[2].score;
-document.getElementById('scoreBar4').innerHTML = players[3].score;
-document.getElementById('scoreBar5').innerHTML = players[4].score;
-document.getElementById('scoreBar1-Name').innerHTML = players[0].name;
-document.getElementById('scoreBar2-Name').innerHTML = players[1].name;
-document.getElementById('scoreBar3-Name').innerHTML = players[2].name;
-document.getElementById('scoreBar4-Name').innerHTML = players[3].name;
-document.getElementById('scoreBar5-Name').innerHTML = players[4].name;
-
-console.log(players);
 var topScore = 0;
 
 let min = [0];
 
-let scoreNumbers = [0, 0, 0, 0, 0];
-
 let newName = "";
+
+const players = getHighscore();
 
 const defaultLevel1BlockPoints = [
   { x: 3, y: 2 },
@@ -112,6 +97,7 @@ const defaultLevel1BlockPoints = [
   { x: 15, y: 6 },
   { x: 16, y: 6 },
   { x: 17, y: 6 },
+  
 ];
 
 let blockPoints = defaultLevel1BlockPoints.slice();
@@ -168,6 +154,7 @@ function main() {
     pages.index.classList.add('hidden');
     pages.game.classList.add('hidden');
     pages.highscore.classList.remove('hidden');
+    updateMenuHighscore();
   })
 
   const highscoreGameButtonElement = document.getElementById('game-score-btn');
@@ -176,7 +163,9 @@ function main() {
     pages.index.classList.add('hidden');
     pages.game.classList.add('hidden');
     pages.highscore.classList.remove('hidden');
+    timeToFrame =200;
     restart();
+    updateMenuHighscore();
   })
 
   const menuButtonElement = document.getElementById('menu-btn');
@@ -194,6 +183,7 @@ function main() {
     pages.game.classList.add('hidden');
     pages.highscore.classList.add('hidden');
     isGameActive = false;
+    timeToFrame =200;
     restart()
   })
 
@@ -209,24 +199,42 @@ function main() {
     setTimeout(game, timeToFrame);
   })
 
-  function gameZone() {
-    var div = document.getElementById('gameWindow');
-    if (isNotCreated === true) {
-      for (var i = 0; i < 21; i++) {
-        for (var j = 0; j < 21; j++) {
-          var newDiv = document.createElement('div');
-          newDiv.id = `${i} ${j}`;
-          newDiv.classList.add('areaBox');
-          div.appendChild(newDiv);
-          if (i === 20) {
-            isNotCreated = false;
-          }
+}
+
+function updateMenuHighscore(){
+  const players = getHighscore();
+
+  let index = 1;
+  for (const { name, score } of players) {
+    document.getElementById(`scoreBar${index}`).innerHTML = score;
+    document.getElementById(`scoreBar${index}-Name`).innerHTML = name;
+    index++;
+  }
+}
+
+function gameZone() {
+  var div = document.getElementById('gameWindow');
+  if (isNotCreated === true) {
+    for (var i = 0; i < 21; i++) {
+      for (var j = 0; j < 21; j++) {
+        var newDiv = document.createElement('div');
+        newDiv.id = `${i} ${j}`;
+        newDiv.classList.add('areaBox');
+        div.appendChild(newDiv);
+        if (i === 20) {
+          isNotCreated = false;
         }
       }
     }
   }
 }
 
+function epicWin(){
+  score +=5;
+  blockPoints = defaultLevel1BlockPoints.slice();
+  if (timeToFrame >50) timeToFrame -= 10;
+  console.log(timeToFrame);
+}
 function restart() {
   clearBall();
   clearPlatform();
@@ -248,83 +256,7 @@ function restart() {
     { x: 11, y: 19 },
     { x: 12, y: 19 },
   ];
-  blockPoints = [
-    { x: 3, y: 2 },
-    { x: 4, y: 2 },
-    { x: 5, y: 2 },
-    { x: 6, y: 2 },
-    { x: 7, y: 2 },
-    { x: 8, y: 2 },
-    { x: 9, y: 2 },
-    { x: 10, y: 2 },
-    { x: 11, y: 2 },
-    { x: 12, y: 2 },
-    { x: 13, y: 2 },
-    { x: 14, y: 2 },
-    { x: 15, y: 2 },
-    { x: 16, y: 2 },
-    { x: 17, y: 2 },
-    { x: 3, y: 3 },
-    { x: 4, y: 3 },
-    { x: 5, y: 3 },
-    { x: 6, y: 3 },
-    { x: 7, y: 3 },
-    { x: 8, y: 3 },
-    { x: 9, y: 3 },
-    { x: 10, y: 3 },
-    { x: 11, y: 3 },
-    { x: 12, y: 3 },
-    { x: 13, y: 3 },
-    { x: 14, y: 3 },
-    { x: 15, y: 3 },
-    { x: 16, y: 3 },
-    { x: 17, y: 3 },
-    { x: 3, y: 4 },
-    { x: 4, y: 4 },
-    { x: 5, y: 4 },
-    { x: 6, y: 4 },
-    { x: 7, y: 4 },
-    { x: 8, y: 4 },
-    { x: 9, y: 4 },
-    { x: 10, y: 4 },
-    { x: 11, y: 4 },
-    { x: 12, y: 4 },
-    { x: 13, y: 4 },
-    { x: 14, y: 4 },
-    { x: 15, y: 4 },
-    { x: 16, y: 4 },
-    { x: 17, y: 4 },
-    { x: 3, y: 5 },
-    { x: 4, y: 5 },
-    { x: 5, y: 5 },
-    { x: 6, y: 5 },
-    { x: 7, y: 5 },
-    { x: 8, y: 5 },
-    { x: 9, y: 5 },
-    { x: 10, y: 5 },
-    { x: 11, y: 5 },
-    { x: 12, y: 5 },
-    { x: 13, y: 5 },
-    { x: 14, y: 5 },
-    { x: 15, y: 5 },
-    { x: 16, y: 5 },
-    { x: 17, y: 5 },
-    { x: 3, y: 6 },
-    { x: 4, y: 6 },
-    { x: 5, y: 6 },
-    { x: 6, y: 6 },
-    { x: 7, y: 6 },
-    { x: 8, y: 6 },
-    { x: 9, y: 6 },
-    { x: 10, y: 6 },
-    { x: 11, y: 6 },
-    { x: 12, y: 6 },
-    { x: 13, y: 6 },
-    { x: 14, y: 6 },
-    { x: 15, y: 6 },
-    { x: 16, y: 6 },
-    { x: 17, y: 6 },
-  ]
+  blockPoints = defaultLevel1BlockPoints.slice();
 }
 
 function clearPlatform() {
@@ -371,38 +303,22 @@ function gameOver() {
   document.getElementById('gameOverText').classList.remove('hidden');
   document.getElementById('game-score-btn').classList.remove('hidden');
   document.getElementById('game-menu-btn').classList.add('hidden');
-  newName = prompt("Enter your name", "");
+  updateMenuHighscore();
+  const newName = prompt("Enter your name", "");
   updateHighscore(newName, score);
-  players = getHighscore();
-  document.getElementById('scoreBar1').innerHTML = players[0].score;
-  document.getElementById('scoreBar2').innerHTML = players[1].score;
-  document.getElementById('scoreBar3').innerHTML = players[2].score;
-  document.getElementById('scoreBar4').innerHTML = players[3].score;
-  document.getElementById('scoreBar5').innerHTML = players[4].score;
-  document.getElementById('scoreBar1-Name').innerHTML = players[0].name;
-  document.getElementById('scoreBar2-Name').innerHTML = players[1].name;
-  document.getElementById('scoreBar3-Name').innerHTML = players[2].name;
-  document.getElementById('scoreBar4-Name').innerHTML = players[3].name;
-  document.getElementById('scoreBar5-Name').innerHTML = players[4].name;
 
-
+  let index = 1;
+  for (const { name, score } of players) {
+    document.getElementById(`scoreBar${index}`).innerHTML = score;
+    document.getElementById(`scoreBar${index}-Name`).innerHTML = name;
+    index++;
+  }
 }
 
 function bestScore() {
-  scoreNumbers[0] = parseInt(players[0].score);
-  scoreNumbers[1] = parseInt(players[1].score);
-  scoreNumbers[2] = parseInt(players[2].score);
-  scoreNumbers[3] = parseInt(players[3].score);
-  scoreNumbers[4] = parseInt(players[4].score);
-  min = scoreNumbers[0];
-  console.log(scoreNumbers);
-  console.log(num);
-  for (var i = 0; i < 6; i++) {
-     topScore = Math.max.apply(null, scoreNumbers);
-    if (Math.max.apply(null, scoreNumbers) < score) {
-      topScore = score;
-    }
-  }
+  const players = getHighscore();
+  if (players.length > 0) topScore = players[0].score;
+  topScore = Math.max(topScore, score);
 }
 
 function ballMove() {
@@ -444,51 +360,62 @@ function ballMove() {
   }
 }
 
+function brickHasBeenHitted(brick) {
+  const index = blockPoints.indexOf(brick);
+  blockPoints.splice(index, 1);
+  removeBlock(brick);
+  score++;
+}
+
 function ballHitToBrick() {
-  const brick = blockPoints.find((point) => point.x === ball.x && point.y === ball.y);
-  if (brick != null) {
-    const index = blockPoints.indexOf(brick);
-    blockPoints.splice(index, 1);
-    const leftBrick = blockPoints.find((point) => point.x === brick.x - 1 && point.y === brick.y);
-    const rightBrick = blockPoints.find((point) => point.x === brick.x + 1 && point.y === brick.y);
-    const topBrick = blockPoints.find((point) => point.x === brick.x && point.y === brick.y - 1);
-    const bottomBrick = blockPoints.find((point) => point.x === brick.x && point.y === brick.y + 1);
-    if (ballDir === "topRight") {
-      debugger;
-      if (rightBrick != null) {
-        ball.y++;
-        ballDir = "downRight";
-      } else if (topBrick != null) {
-        ball.y++;
-        ballDir = "downRight";
-      }
-    } else if (ballDir === "topLeft") {
-      if (leftBrick != null) {
-        ball.y++;
-        ballDir = "topRight";
-      } else if (topBrick != null) {
-        ball.y++;
-        ballDir = "downLeft";
-      }
-    } else if (ballDir === "downRight") {
-      if (bottomBrick != null) {
-        ball.x--;
-        ballDir = "downLeft";
-      } else if (rightBrick != null) {
-        ball.x--;
-        ballDir === "topRight";
-      }
-    } else if (ballDir === "downLeft") {
-      if (bottomBrick != null) {
-        ball.y--;
-        ballDir = "topLeft";
-      } else if (leftBrick != null) {
-        ball.x++;
-        ballDir = "downRight";
-      }
-    }
-    removeBlock(brick);
-    score++;
+  const leftBrick = blockPoints.find((point) => point.x === ball.x - 1 && point.y === ball.y);
+  const rightBrick = blockPoints.find((point) => point.x === ball.x + 1 && point.y === ball.y);
+  const topBrick = blockPoints.find((point) => point.x === ball.x && point.y === ball.y - 1);
+  const bottomBrick = blockPoints.find((point) => point.x === ball.x && point.y === ball.y + 1);
+
+  const leftTopBrick = blockPoints.find((point) => point.x === ball.x - 1 && point.y === ball.y - 1);
+  const rightTopBrick = blockPoints.find((point) => point.x === ball.x + 1 && point.y === ball.y - 1);
+  const leftBottomBrick = blockPoints.find((point) => point.x === ball.x - 1 && point.y === ball.y + 1);
+  const rightBottomBrick = blockPoints.find((point) => point.x === ball.x + 1 && point.y === ball.y + 1);
+
+  if (ballDir === "topRight" && topBrick != null) {
+    brickHasBeenHitted(topBrick);
+    ballDir = "downRight";
+  } else if (ballDir === "topRight" && rightBrick != null) {
+    brickHasBeenHitted(rightBrick);
+    ballDir = "topLeft";
+  } else if (ballDir === "topLeft" && topBrick != null) {
+    brickHasBeenHitted(topBrick);
+    ballDir = "downLeft";
+  } else if (ballDir === "topLeft" && leftBrick != null) {
+    brickHasBeenHitted(leftBrick);
+    ballDir = "topRight";
+  } else if (ballDir === "downRight" && bottomBrick != null) {
+    brickHasBeenHitted(bottomBrick);
+    ballDir = "topRight";
+  } else if (ballDir === "downRight" && rightBrick != null) {
+    brickHasBeenHitted(rightBrick);
+    ballDir = "downLeft";
+  } else if (ballDir === "downLeft" && bottomBrick != null) {
+    brickHasBeenHitted(bottomBrick);
+    ballDir = "topLeft";
+  } else if (ballDir === "downLeft" && leftBrick != null) {
+    brickHasBeenHitted(leftBrick);
+    ballDir = "downRight";
+  }
+  //----------
+  else if (ballDir === "topRight" && rightTopBrick != null) {
+    brickHasBeenHitted(rightTopBrick);
+    ballDir = "downLeft";
+  } else if (ballDir === "topLeft" && leftTopBrick != null) {
+    brickHasBeenHitted(leftTopBrick);
+    ballDir = "downRight";
+  } else if (ballDir === "downLeft" && leftBottomBrick != null) {
+    brickHasBeenHitted(leftBottomBrick);
+    ballDir = "topLeft";
+  } else if (ballDir === "downRight" && rightBottomBrick != null) {
+    brickHasBeenHitted(rightBottomBrick);
+    ballDir = "topRight";
   }
 }
 
@@ -504,7 +431,6 @@ function platformMove() {
     }
     if (isBallMoving === false) ball.x -= 1;
   }
-
   dir = "notMoving";
 }
 
@@ -521,8 +447,8 @@ function game() {
   document.getElementById('score').innerHTML = score;
   bestScore();
   renderPlatform();
-  renderBall()
-
+  renderBall();
+  if (blockPoints.length === 0)epicWin();
   if (isGameActive) setTimeout(game, timeToFrame);
 }
 

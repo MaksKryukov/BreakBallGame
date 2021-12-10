@@ -303,7 +303,7 @@ html, body {
   display: none;
 }
 .areaBox{
-  border: 1px dashed white;
+  border: 0px dashed white;
 }
 .platform{
   background-color: rgb(53, 255, 86);
